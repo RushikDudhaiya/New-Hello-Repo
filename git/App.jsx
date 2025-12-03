@@ -1,11 +1,32 @@
-import React from 'react'
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { increment, decrement, incrementByAmount } from "./features/counterSlice";
 
-export const App = () => {
+function App() {
+  const count = useSelector((state) => state.counter.value);
+  const dispatch = useDispatch();
+  const [amount, setAmount] = useState(0);
+
   return (
-    <>
-      <div>App</div>
-      <div>Hello App</div>
-      <div>This is code check the push the code in github or not it is testing github to push code and commit</div>
-    </>
-  )
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Redux Toolkit Counter</h1>
+      <h2>Count: {count}</h2>
+
+      <button onClick={() => dispatch(increment())}>+</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+
+      <div style={{ marginTop: "20px" }}>
+        <input
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(Number(e.target.value))}
+        />
+        <button onClick={() => dispatch(incrementByAmount(amount))}>
+          Add Amount
+        </button>
+      </div>
+    </div>
+  );
 }
+
+export default App;
